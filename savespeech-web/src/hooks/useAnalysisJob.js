@@ -7,7 +7,7 @@ import { addHistoryItem } from "../services/historyApi";
 
 /**
  * Hook yang mengelola lifecycle satu job analisis terhadap backend nyata:
- * start → polling status berkala (1000-2000 ms) → done/failed → navigasi.
+ * start → polling status berkala (1000-2000 ms) → done/failed → navigasi. 
  *
  * Mengekspos: { status, progress, elapsedSec, error, retry, cancel }
  */

@@ -92,21 +92,37 @@ def compute_risk(
     risk_level = calculate_risk_level(risk_score, levels_cfg)
 
     # 4. Aturan Override Keamanan
-    # Klaim lembaga keuangan DAN (OTP atau PIN) -> minimal High
     ind_codes = {ind.get("code") for ind in indicators}
     has_institution_claim = "CLAIM_INSTITUTION" in ind_codes
     has_credential_req = ("REQ_OTP" in ind_codes) or ("REQ_CREDENTIAL" in ind_codes)
+    has_transfer_req = "TRANSFER_INSTRUCTION" in ind_codes
+    has_threat = "BLOCK_THREAT" in ind_codes or "PSYCHOLOGICAL_MANIP" in ind_codes
 
     override_applied = False
     final_label = base_label
 
-    if has_institution_claim and has_credential_req:
+    # Rule 1: Permintaan Kredensial Kritis (OTP / PIN / Password) langsung memicu minimal HIGH
+    if has_credential_req:
         if risk_level in ("Low", "Medium"):
             risk_level = "High"
-            risk_score = max(risk_score, 60)
+            risk_score = max(risk_score, 65)
             override_applied = True
         if base_label == "NORMAL":
             final_label = "SUSPICIOUS"
+            override_applied = True
+
+    # Rule 2: Klaim Lembaga + (Kredensial ATAU Transfer ATAU Ancaman) -> CRITICAL
+    if has_institution_claim and (has_credential_req or has_transfer_req or has_threat):
+        risk_level = "Critical" if has_credential_req else "High"
+        risk_score = max(risk_score, 85 if has_credential_req else 70)
+        final_label = "SCAM"
+        override_applied = True
+
+    # Rule 3: Jika model ML memprediksi SCAM dengan pScam tinggi tapi skor indikator rendah
+    if base_label == "SCAM" and p_scam >= 0.6:
+        if risk_level in ("Low", "Medium"):
+            risk_level = "High"
+            risk_score = max(risk_score, 60)
             override_applied = True
 
     # 5. Generator Penjelasan

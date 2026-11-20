@@ -2,17 +2,18 @@
 indicators:
   - code: "REQ_OTP"
     label: "Permintaan Kode OTP"
-    weight: 30
+    weight: 35
     patterns:
       - "(?:kode\\s*)?otp"
       - "one[- ]time\\s*password"
       - "kode\\s*(?:enam|6)\\s*digit"
       - "kode\\s*verifikasi\\s*(?:sms|wa|whatsapp)?"
-      - "(?:sebutkan|bacakan|kirimkan|masukkan)\\s*kode"
+      - "(?:sebutkan|bacakan|kirimkan|masukkan|minta)\\s*kode"
+      - "kode\\s*(?:masuk|rahasia|keamanan)"
 
   - code: "REQ_CREDENTIAL"
     label: "Permintaan PIN / Password / Data Kartu"
-    weight: 30
+    weight: 35
     patterns:
       - "pin\\s*(?:atm|akun)?"
       - "password\\s*(?:m-?banking)?"
@@ -21,24 +22,27 @@ indicators:
       - "(?:kode\\s*)?cvc"
       - "nomor\\s*kartu\\s*(?:debit|kredit)?"
       - "(?:tiga|3)\\s*angka\\s*(?:di\\s*belakang)?"
+      - "nomor\\s*rekening"
 
   - code: "TRANSFER_INSTRUCTION"
     label: "Instruksi Transfer Dana ('Rekening Aman')"
-    weight: 25
+    weight: 30
     patterns:
       - "rekening\\s*aman"
       - "rekening\\s*penampungan"
       - "rekening\\s*(?:khusus\\s*)?kepolisian"
-      - "transfer\\s*(?:saldo|dana|ke\\s*rekening)"
+      - "transfer\\s*(?:saldo|dana|uang|ke\\s*rekening)?"
       - "pindahkan\\s*(?:seluruh\\s*)?dana"
+      - "kirim\\s*(?:saldo|dana|uang)"
       - "virtual\\s*account\\s*aman"
       - "transfer\\s*pengembalian"
 
   - code: "CLAIM_INSTITUTION"
     label: "Mengaku Lembaga Finansial / Bank / E-Wallet / CS"
-    weight: 15
+    weight: 20
     patterns:
-      - "(?:dari|pihak)\\s*bank"
+      - "(?:dari|pihak)\\s*(?:bank|bca|bri|bni|mandiri|bsi)"
+      - "\\b(?:bank|bca|bri|bni|mandiri|cimb|danamon|permata|dana|gopay|ovo|shopeepay)\\b"
       - "(?:petugas\\s*)?keamanan\\s*sentral"
       - "cs\\s*pusat"
       - "customer\\s*(?:service|care)"

@@ -109,6 +109,14 @@ export default function Navbar() {
         {/* Area Aksi & Autentikasi Desktop */}
         <div className="hidden md:flex items-center gap-3">
           <Link
+            to="/live-call"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-violet-200 bg-violet-500/15 border border-violet-400/40 hover:bg-violet-500/25 transition-all shadow-sm"
+          >
+            <i className="ri-broadcast-line text-sm text-violet-400 animate-pulse" />
+            <span>Live Call</span>
+          </Link>
+
+          <Link
             to="/analisis"
             className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold text-cyan-200 bg-cyan-500/10 border border-cyan-400/30 hover:bg-cyan-500/20 transition-all"
           >

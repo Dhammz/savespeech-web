@@ -15,6 +15,7 @@ const Analyze = lazy(() => import("./pages/Analyze"));
 const Processing = lazy(() => import("./pages/Processing"));
 const Result = lazy(() => import("./pages/Result"));
 const History = lazy(() => import("./pages/History"));
+const LiveCall = lazy(() => import("./pages/LiveCall"));
 const Settings = lazy(() => import("./pages/Settings"));
 const AdminDashboard = lazy(() => import("./pages/admin/Dashboard"));
 const SystemLogs = lazy(() => import("./pages/admin/SystemLogs"));
@@ -167,6 +168,16 @@ export default function App() {
                   <ProtectedRoute>
                     <PageTransition>
                       <History />
+                    </PageTransition>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/live-call"
+                element={
+                  <ProtectedRoute>
+                    <PageTransition>
+                      <LiveCall />
                     </PageTransition>
                   </ProtectedRoute>
                 }

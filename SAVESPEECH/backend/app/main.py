@@ -13,7 +13,7 @@ from slowapi.errors import RateLimitExceeded
 from app.core.config import settings
 from app.core.logging import setup_logging
 from app.core.limiter import limiter
-from app.api.routes import health, auth, analyze, jobs, results, history
+from app.api.routes import health, auth, analyze, jobs, results, history, realtime
 
 # Inisialisasi logging terstruktur
 setup_logging(level="INFO" if settings.APP_ENV != "development" else "DEBUG")
@@ -135,3 +135,4 @@ app.include_router(analyze.router, prefix="/api", tags=["Analyze"])
 app.include_router(jobs.router, prefix="/api", tags=["Jobs"])
 app.include_router(results.router, prefix="/api", tags=["Results"])
 app.include_router(history.router, prefix="/api", tags=["History"])
+app.include_router(realtime.router, prefix="/api", tags=["Realtime"])
